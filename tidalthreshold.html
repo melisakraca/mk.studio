@@ -31,8 +31,12 @@
       background: rgba(255 255 255 / 0.2);
       box-shadow: none;
     }
+    nav {
+      display: flex;
+      gap: 20px;
+    }
     nav a {
-      margin-left: 20px;
+      margin-left: 0; /* reset margin for flex gap */
       color: #273287;
       text-decoration: none;
       font-weight: 600;
@@ -191,11 +195,85 @@
     #modalNext {
       right: 20px;
     }
+
+    /* Hamburger buton ve mobil nav için */
+    @media (max-width: 768px) {
+      header {
+        padding: 10px 20px;
+      }
+
+      #headerTitle {
+        font-size: 1.3rem;
+      }
+
+      nav {
+        position: fixed;
+        top: 60px;
+        right: 0;
+        background: #F0EEE9;
+        width: 200px;
+        height: calc(100% - 60px);
+        flex-direction: column;
+        padding-top: 20px;
+        box-shadow: -3px 0 10px rgba(0,0,0,0.1);
+        transform: translateX(100%);
+        transition: transform 0.3s ease;
+        z-index: 1100;
+        display: flex;
+      }
+
+      nav.open {
+        transform: translateX(0);
+      }
+
+      nav a {
+        margin: 15px 20px;
+        font-size: 1rem;
+      }
+
+      #menuToggle {
+        display: block;
+        cursor: pointer;
+        width: 30px;
+        height: 25px;
+        position: relative;
+        z-index: 1200;
+      }
+
+      #menuToggle span {
+        background: #273287;
+        display: block;
+        height: 3px;
+        margin: 5px 0;
+        border-radius: 2px;
+        transition: 0.3s;
+      }
+    }
+
+    #menuToggle {
+      display: none; /* masaüstünde gizle */
+    }
+
+    /* Hamburger açılış animasyonu */
+    #menuToggle.open span:nth-child(1) {
+      transform: rotate(45deg) translate(5px, 5px);
+    }
+    #menuToggle.open span:nth-child(2) {
+      opacity: 0;
+    }
+    #menuToggle.open span:nth-child(3) {
+      transform: rotate(-45deg) translate(5px, -5px);
+    }
   </style>
 </head>
 <body>
   <header id="mainHeader">
     <div id="headerTitle">Studio by Melisa Karaca</div>
+    <div id="menuToggle" aria-label="Toggle menu" role="button" tabindex="0">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
     <nav>
       <a href="index.html#about">About</a>
       <a href="index.html#projects">Projects</a>
@@ -336,6 +414,23 @@
           modalImg.src = '';
           modalImg.alt = '';
         }
+      }
+    });
+
+    // Hamburger menü işlemleri
+    const menuToggle = document.getElementById('menuToggle');
+    const nav = document.querySelector('nav');
+
+    menuToggle.addEventListener('click', () => {
+      nav.classList.toggle('open');
+      menuToggle.classList.toggle('open');
+    });
+
+    menuToggle.addEventListener('keydown', (e) => {
+      if(e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        nav.classList.toggle('open');
+        menuToggle.classList.toggle('open');
       }
     });
   </script>
