@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Tidal Threshold | Studio by Melisa Karaca</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;600&display=swap" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet" />
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #F0EEE9;
+      color: #17184B;
+      margin: 0;
+      scroll-behavior: smooth;
+      line-height: 1.6;
+    }
+    header {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      background: rgba(255 255 255 / 1);
+      box-shadow: 0 2px 8px rgb(0 0 0 / 0.1);
+      z-index: 1000;
+      padding: 15px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: background-color 0.3s ease;
+    }
+    header.transparent {
+      background: rgba(255 255 255 / 0.2);
+      box-shadow: none;
+    }
+    nav a {
+      margin-left: 20px;
+      color: #273287;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.9rem;
+      transition: color 0.3s;
+    }
+    nav a:hover {
+      color: #D8E63C;
+    }
+    #headerTitle {
+      font-weight: 600;
+      font-size: 1.6rem;
+      cursor: pointer;
+      user-select: none;
+      white-space: nowrap;
+    }
+    main {
+      margin-top: 70px;
+      max-width: 960px;
+      margin-left: auto;
+      margin-right: auto;
+      padding: 20px;
+    }
+    .project-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      margin-bottom: 60px;
+      gap: 30px;
+    }
+    .project-row:nth-child(even) {
+      flex-direction: row-reverse;
+    }
+    .project-text, .project-image {
+      min-width: 280px;
+    }
+    .project-text {
+      flex: 1 1 35%;
+    }
+    .project-image {
+      flex: 1 1 60%;
+    }
+    .project-text h3 {
+      margin-top: 0;
+      margin-bottom: 12px;
+      font-weight: 700;
+      font-size: 1.4rem;
+      color: #273287;
+    }
+    .project-text p {
+      font-size: 0.95rem;
+      margin: 0 0 12px 0;
+      color: #17184B;
+      text-align: left;
+      word-wrap: break-word;
+      overflow-wrap: break-word;
+    }
+    .project-text p.secondary {
+      color: #666;
+      font-size: 0.95rem;
+      text-align: left;
+    }
+    .project-text a {
+      color: #273287;
+      text-decoration: none;
+      font-weight: 600;
+    }
+    .project-text a:hover {
+      color: #D8E63C;
+      text-decoration: underline;
+    }
+    .project-image img {
+      width: 100%;
+      max-width: 700px;
+      max-height: 490px;
+      box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+      display: block;
+      object-fit: contain;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+      border-radius: 0; /* foto yuvarlatma kaldırıldı */
+    }
+    .project-image img:hover {
+      transform: scale(1.02);
+    }
+    /* Responsive */
+    @media (max-width: 768px) {
+      .project-row, .project-row:nth-child(even) {
+        flex-direction: column !important;
+      }
+      .project-text, .project-image {
+        flex: 1 1 100%;
+      }
+      .project-image {
+        margin-bottom: 20px;
+      }
+      .project-text h3 {
+        font-size: 1.2rem;
+      }
+      .project-image img {
+        max-width: 100%;
+        max-height: none;
+        object-fit: cover;
+      }
+      .project-text p {
+        font-size: 0.9rem;
+      }
+    }
+
+    /* Modal styles */
+    #imgModal {
+      display: none;
+      position: fixed;
+      z-index: 11000;
+      left: 0;
+      top: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0,0,0,0.8);
+      backdrop-filter: blur(5px);
+      justify-content: center;
+      align-items: center;
+      cursor: zoom-out;
+      user-select: none;
+    }
+    #imgModal img {
+      max-width: 90vw;
+      max-height: 90vh;
+      object-fit: contain;
+      box-shadow: 0 6px 20px rgba(255,255,255,0.3);
+      pointer-events: none;
+    }
+    #modalPrev, #modalNext {
+      position: fixed;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 3rem;
+      color: white;
+      background: rgba(0,0,0,0.4);
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      text-align: center;
+      line-height: 50px;
+      cursor: pointer;
+      user-select: none;
+      z-index: 11001;
+      transition: background 0.3s ease;
+    }
+    #modalPrev:hover, #modalNext:hover {
+      background: rgba(0,0,0,0.7);
+    }
+    #modalPrev {
+      left: 20px;
+    }
+    #modalNext {
+      right: 20px;
+    }
+  </style>
+</head>
+<body>
+  <header id="mainHeader">
+    <div id="headerTitle">Studio by Melisa Karaca</div>
+    <nav>
+      <a href="index.html#about">About</a>
+      <a href="index.html#projects">Projects</a>
+      <a href="index.html#papers">Papers</a>
+      <a href="index.html#cv">CV</a>
+      <a href="index.html#contact">Contact</a>
+    </nav>
+  </header>
+  <main>
+    <div class="project-row" data-aos="fade-up" data-aos-offset="150" data-aos-duration="800">
+      <div class="project-text">
+        <h1>Tidal Threshold</h1>
+        <p class="secondary">Urla, İzmir, Turkey</p>
+        <p><strong>2024 - 2025 Spring</strong></p>
+      </div>
+    </div>
+
+    <div class="project-row" data-aos="fade-up" data-aos-offset="150" data-aos-duration="800">
+      <div class="project-text">
+        <p>
+          Set against the evolving coastline of Urla İskele, the project reimagines heritage not as static preservation but as a vibrant, living part of daily life. As shifting sea levels and urban growth fragment access to historical layers, Tidal Threshold introduces an open, low-impact design approach that activates forgotten narratives and fosters public interaction. Connecting Urla İskele with Quarantine Island, this intervention serves as a threshold between past and future, land and sea, memory and movement. Here, architecture acts not only as shelter but as storyteller.
+        </p>
+        <p><a href="#">Studio Advisor</a><br>Zeynep Ege Odabaşı</p>
+        <p><a href="#">Tools Used</a><br>Revit, Autocad, Photoshop, InDesign</p>
+      </div>
+      <div class="project-image">
+        <img src="tidalthreshold1.jpg" alt="Tidal Threshold" />
+      </div>
+    </div>
+
+    <div class="project-row" data-aos="fade-up" data-aos-offset="150" data-aos-duration="800">
+      <div class="project-text">
+        <h3>Adaptive Spaces: Rediscovering the Sunken Past</h3>
+        <p>
+          As the sea gradually recedes over the coming centuries, the sunken city of Klazomenai—an ancient settlement dating back to 4000 BCE—will reemerge, unveiling its buried history. Tidal Threshold anticipates this shift by designing for a future coastline that extends into submerged zones. Today’s underwater ruins are envisioned as tomorrow’s courtyards, gardens, and gathering spaces. Architecture embraces time and nature as materials, creating a layered, dynamic landscape that evolves with the rhythm of the sea and erosion.
+        </p>
+      </div>
+      <div class="project-image">
+        <img src="tidalthreshold2.jpg" alt="Tidal Threshold" />
+      </div>
+    </div>
+
+    <div class="project-row" data-aos="fade-up" data-aos-offset="150" data-aos-duration="800">
+      <div class="project-text">
+        <h3>Layered Cultural Memory and Public Engagement</h3>
+        <p>
+          Urla İskele is a coastal district steeped in rich, multi-layered heritage shaped by ancient civilizations, Ottoman influences, and modern cultural exchanges. This cultural fabric, however, faces fragmentation due to changing water levels and urban expansion. Tidal Threshold delicately reveals archaeological traces through water-sensitive spatial sequences and interactive public zones, transforming heritage into a continuously engaging cultural experience. The project seamlessly weaves history into the present, fostering a deep connection between community, nature, and memory.
+        </p>
+      </div>
+      <div class="project-image">
+        <img src="tidalthreshold3.jpg" alt="Tidal Threshold" />
+      </div>
+    </div>
+
+    <div class="project-row" data-aos="fade-up" data-aos-offset="150" data-aos-duration="800">
+      <div class="project-text">
+        <h3>Flexible and Sustainable Public Spaces for the Future</h3>
+        <p>
+          The new masterplan reclaims Urla İskele’s fragmented, car-dominated shoreline by creating a continuous, walkable, and bike-friendly urban fabric. Designed with future sea-level fluctuations in mind, the project offers resilient, adaptable infrastructure that supports cultural continuity and encourages active public use. By harmonizing built and natural environments, Tidal Threshold fosters a sustainable, multi-layered urban ecosystem that shapes the present and future of coastal living.
+        </p>
+      </div>
+      <div class="project-image">
+        <img src="tidalthreshold4.jpg" alt="Tidal Threshold" />
+      </div>
+    </div>
+  </main>
+
+  <!-- Modal for image viewing -->
+  <div id="imgModal" onclick="closeModal(event)">
+    <img id="modalImg" src="" alt="Expanded project image" />
+    <div id="modalPrev" onclick="prevImage(event)">&#10094;</div>
+    <div id="modalNext" onclick="nextImage(event)">&#10095;</div>
+  </div>
+
+  <footer class="footer">
+    &copy; 2025 Studio by Melisa Karaca. All rights reserved.
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+  <script>
+    AOS.init();
+
+    const header = document.getElementById('mainHeader');
+    window.addEventListener('scroll', () => {
+      if(window.scrollY > 50) {
+        header.classList.add('transparent');
+      } else {
+        header.classList.remove('transparent');
+      }
+    });
+
+    const modal = document.getElementById('imgModal');
+    const modalImg = document.getElementById('modalImg');
+    const images = Array.from(document.querySelectorAll('.project-image img'));
+    let currentIndex = 0;
+
+    images.forEach((img, index) => {
+      img.addEventListener('click', () => {
+        currentIndex = index;
+        openModal();
+      });
+    });
+
+    function openModal() {
+      modal.style.display = 'flex';
+      modalImg.src = images[currentIndex].src;
+      modalImg.alt = images[currentIndex].alt;
+    }
+
+    function closeModal(e) {
+      if (e.target === modal) {
+        modal.style.display = 'none';
+        modalImg.src = '';
+        modalImg.alt = '';
+      }
+    }
+
+    function prevImage(e) {
+      e.stopPropagation();
+      currentIndex = (currentIndex - 1 + images.length) % images.length;
+      openModal();
+    }
+
+    function nextImage(e) {
+      e.stopPropagation();
+      currentIndex = (currentIndex + 1) % images.length;
+      openModal();
+    }
+
+    document.addEventListener('keydown', (e) => {
+      if(modal.style.display === 'flex') {
+        if(e.key === 'ArrowLeft') {
+          prevImage(e);
+        } else if(e.key === 'ArrowRight') {
+          nextImage(e);
+        } else if(e.key === 'Escape') {
+          modal.style.display = 'none';
+          modalImg.src = '';
+          modalImg.alt = '';
+        }
+      }
+    });
+  </script>
+</body>
+</html>

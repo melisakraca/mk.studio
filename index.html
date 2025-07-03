@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Studio by Melisa Karaca</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;600&display=swap" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet" />
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #F0EEE9;
+      color: #17184B;
+      scroll-behavior: smooth;
+      margin: 0;
+    }
+    header {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      background: rgba(255 255 255 / 1);
+      box-shadow: 0 2px 8px rgb(0 0 0 / 0.1);
+      z-index: 1000;
+      padding: 15px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: background-color 0.3s ease;
+    }
+    header.transparent {
+      background: rgba(255 255 255 / 0.2);
+      box-shadow: none;
+      transition: background-color 0.3s ease;
+    }
+    nav a {
+      margin-left: 20px;
+      color: #273287;
+      text-decoration: none;
+      font-weight: 700; /* Bold yapıldı */
+      font-size: 0.9rem;
+      transition: color 0.3s;
+    }
+    nav a:hover {
+      color: #D8E63C;
+    }
+
+    nav a.how-arch-link {
+  color: #F1642E;
+  font-weight: 700;
+  margin-left: 20px;
+  transition: color 0.3s;
+}
+
+nav a.how-arch-link:hover {
+  color: #b5c72b; /* Koyu sarı ton */
+}
+
+
+    #headerTitle {
+      font-weight: 600;
+      font-size: 1.6rem;
+      letter-spacing: normal;
+      cursor: default;
+      display: flex;
+      user-select: none;
+      white-space: nowrap;
+      transition: none;
+    }
+    #headerTitle span {
+      display: inline-block;
+      transition: none;
+      opacity: 1 !important;
+      transform: none !important;
+      display: inline-block !important;
+    }
+
+    .hero {
+      /* Yeni hero stili için aşağıdaki flex ayarı inline style ile verildi */
+    }
+    .projects-hover-list .project-item {
+      font-size: 24px;
+      font-weight: 500;
+      position: relative;
+      padding: 40px;
+      overflow: hidden;
+      background: #fff;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      color: #17184B;
+      border-radius: 8px;
+    }
+    .projects-hover-list .project-item:hover {
+      color: white;
+      background-color: #D8E63C; /* Limea rengi */
+    }
+    .projects-hover-list .project-item span {
+      position: relative;
+      z-index: 1;
+    }
+    .footer {
+      text-align: center;
+      padding: 40px;
+      background: #D3DDE7;
+      font-size: 14px;
+      color: #17184B;
+    }
+    .footer a {
+      color: #273287;
+      text-decoration: none;
+    }
+    .footer a:hover {
+      text-decoration: underline;
+      color: #D8E63C;
+    }
+    .profile-block {
+      background: transparent;
+      color: #17184B;
+      box-shadow: none;
+      transition: 0.3s ease;
+    }
+    .profile-block p {
+      margin-bottom: 1.2rem;
+      font-size: 1.1rem;
+      line-height: 1.7;
+      text-align: justify;
+    }
+    .paper-card {
+      background: #fff;
+      padding: 24px;
+      border-radius: 12px;
+      border: 2px solid #4169E1; /* Royal Blue */
+      transition: 0.3s;
+      height: 100%;
+      cursor: pointer;
+      position: relative;
+      color: #17184B;
+    }
+    .paper-card:hover {
+      background-color: #A99BF7; /* Yeni hover rengi */
+      color: white; /* Yazılar okunaklı olsun */
+      transform: scale(1.015);
+      box-shadow: 0 6px 24px rgba(0,0,128,0.1);
+    }
+    .paper-content {
+      background: #fff;
+      padding: 40px;
+      max-width: 70%;
+      max-height: 80%;
+      overflow-y: auto;
+      border-radius: 20px;
+      box-shadow: 0 0 30px rgba(0,0,0,0.3);
+      position: relative;
+    }
+    .scrollable-text {
+      white-space: pre-wrap;
+      line-height: 1.6;
+    }
+    .close-btn {
+      position: absolute;
+      top: 10px;
+      right: 20px;
+      background: transparent;
+      border: none;
+      font-size: 28px;
+      cursor: pointer;
+    }
+    /* Section başlıkları: Projects, Papers, CV, Contact, About */
+    #papers h2,
+    #contact h2,
+    #cv h2,
+    #projects > .container-title,
+    .profile-block h2 {
+      color: #17184B;
+      font-weight: 700; /* Bold yapıldı */
+    }
+    #paperModal {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(240, 240, 240, 0.7);
+      backdrop-filter: blur(4px);
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+    }
+    .download-icon {
+      display: inline-block;
+      cursor: pointer;
+      vertical-align: middle;
+      margin-top: 12px;
+      transition: fill 0.3s ease;
+      background: transparent !important;
+      border: none !important;
+      padding: 0;
+      text-decoration: none;
+      color: #4169E1;
+      font-weight: 600;
+    }
+
+    .download-icon svg {
+      fill: #4169E1;
+      transition: fill 0.3s ease;
+      vertical-align: middle;
+      margin-right: 6px;
+    }
+
+    .download-icon:hover {
+      color: #2c4bb8;
+    }
+    .download-icon:hover svg {
+      fill: #2c4bb8;
+    }
+
+  .projects-hover-list {
+    position: relative;
+  }
+
+  .projects-hover-list::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .projects-hover-list.hover-active::before {
+    opacity: 1;
+    background-image: var(--hover-bg);
+  }
+
+  .project-item {
+    position: relative;
+    z-index: 1;
+    transition: color 0.3s ease;
+  }
+
+  .project-item:hover {
+    color: white; /* İstersen yazı rengini buradan değiştirebilirsin */
+  }
+
+  /* Yeni eklendi: Projects başlığı */
+  #projects > .container-title {
+    text-align: center;
+    font-weight: 700;
+    font-size: 1.75rem;
+    color: #17184B;
+    margin-bottom: 1.5rem;
+  }
+  </style>
+</head>
+<body>
+  <header id="mainHeader">
+  <div id="headerTitle">Studio by Melisa Karaca</div>
+  <nav>
+    <a href="#about">About</a>
+    <a href="#projects">Projects</a>
+    <a href="#papers">Papers</a>
+    <a href="#cv">CV</a>
+    <a href="#contact">Contact</a>
+    <a href="https://www.instagram.com/howarchitecture/" target="_blank" rel="noopener noreferrer" class="how-arch-link">How Arch</a>
+  </nav>
+</header>
+
+
+  <section class="hero" id="hero" style="margin-top: 70px;">
+    <img src="MelisaKaracaimg.png" alt="Melisa Karaca" style="width: 100%; height: 100vh; object-fit: cover; display: block;" />
+  </section>
+
+  <section class="py-5" id="about">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-md-10">
+          <div class="profile-block p-4 rounded" data-aos="fade-up" data-aos-duration="900" data-aos-easing="ease-out-cubic">
+            <h2 class="mb-4 text-center" style="font-family: 'Inter', sans-serif; font-weight: 600; color: #17184B;" data-aos="fade-up" data-aos-duration="900" data-aos-easing="ease-out-cubic">About</h2>
+            <p class="text-justify" data-aos="fade-up" data-aos-duration="900" data-aos-easing="ease-out-cubic" data-aos-delay="200">
+              Architecture, for me, is as much about asking the right questions as it is about finding the right forms. During my studies at Bilkent University, I’ve come to see design as a way of thinking—a tool to observe, interpret, and engage with the world around us. With a multicultural perspective, I approach architecture as both a creative pursuit and a problem-solving process. I’m drawn to projects that respond to context, embrace complexity, and challenge assumptions—balancing technical precision with a sensitivity to material, place, and people. As I step into the professional world, I see each design not just as a solution, but as an evolving dialogue between space, experience, and purpose. I aim to shape environments that are not only environmentally responsible, but also emotionally resonant. Locally rooted, globally minded, I remain open to collaboration, conversation, and continuous learning as I contribute to the future of the built environment.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="py-5" id="projects">
+    <div class="container-title">Projects</div>
+    <div class="projects-hover-list" data-aos="fade-up" data-aos-duration="900" data-aos-easing="ease-out-cubic" data-aos-delay="200">
+
+      <a href="tidalthreshold.html" class="project-item project1" style="position: relative; cursor: pointer; padding: 40px; display: block; color: inherit; text-decoration: none;">
+        <span style="font-size: 24px; font-weight: 500;">Tidal Threshold</span><br />
+        <span style="font-size: 14px; font-weight: 300; color: #666; position: absolute; bottom: 20px;">Urla, İzmir, Turkey</span>
+      </a>
+
+      <a href="artistrysanctuary.html" class="project-item project2" style="position: relative; cursor: pointer; padding: 40px; display: block; color: inherit; text-decoration: none;">
+        <span style="font-size: 24px; font-weight: 500;">Artistry Sanctuary</span><br />
+        <span style="font-size: 14px; font-weight: 300; color: #666; position: absolute; bottom: 20px;">Alsancak, İzmir, Turkey</span>
+      </a>
+      <a href="formoflife.html" class="project-item project3" style="position: relative; cursor: pointer; padding: 40px; display: block; color: inherit; text-decoration: none;">
+        <span style="font-size: 24px; font-weight: 500;">Form of Life</span><br />
+        <span style="font-size: 14px; font-weight: 300; color: #666; position: absolute; bottom: 20px;">Ulus, Ankara, Turkey</span>
+      </a>
+      <a href="pagetostage.html" class="project-item project3" style="position: relative; cursor: pointer; padding: 40px; display: block; color: inherit; text-decoration: none;">
+        <span style="font-size: 24px; font-weight: 500;">Page to Stage</span><br />
+        <span style="font-size: 14px; font-weight: 300; color: #666; position: absolute; bottom: 20px;">Ulus, Ankara, Turkey</span>
+      </a>
+    </div>
+  </section>
+
+  <section class="py-5" id="papers">
+    <div class="container">
+      <h2 class="text-center mb-4" data-aos="fade-up" data-aos-duration="900" data-aos-easing="ease-out-cubic">Papers</h2>
+      <div class="row g-4" data-aos="fade-up" data-aos-duration="900" data-aos-easing="ease-out-cubic" data-aos-delay="200">
+
+        <!-- 1. kart: paper2 içeriği (Triangle of Ministries) -->
+        <div class="col-md-6">
+          <div class="paper-card" onclick="openPaper('paper2')">
+            <small class="text-uppercase fw-bold">Conservation of Historical Environments</small>
+            <h5 class="mt-2">Conservation of Urban Heritage: Triangle of Ministries, Ankara</h5>
+            <p>This document is an academic study of the Triangle of Ministries in Ankara, tracing its original modernist layout (1924–1935), analyzing subsequent state-led interventions against international conservation charters, and proposing guidelines to restore the site’s integrity, authenticity, and public engagement.</p>
+            <a href="Conservation of Historical Environments.pdf" download target="_blank" rel="noopener noreferrer" class="download-icon" onclick="event.stopPropagation()" aria-label="Download PDF">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#4169E1" viewBox="0 0 24 24">
+                <path d="M12 16l4-5h-3V4h-2v7H8l4 5zm-6 4h12v-2H6v2z"/>
+              </svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- 2. kart: paper4 içeriği (Cinnah 19) -->
+        <div class="col-md-6">
+          <div class="paper-card" onclick="openPaper('paper4')">
+            <small class="text-uppercase fw-bold">History of Built Environment</small>
+            <h5 class="mt-2">Cinnah 19: Redefining Urban Space and Function</h5>
+            <p>
+              This paper is an academic study that investigates the architectural and historical significance of Cinnah 19, a key example of modernist residential architecture in Ankara. It analyzes the building’s design origins, evolution, spatial organization, and its role within the context of Turkey’s mid-20th-century housing developments. The paper aims to contribute to the understanding of cooperative housing models and modern architectural practices in Turkey, highlighting the cultural and functional importance of Cinnah 19.
+              <br /><br />
+              <a href="Cinnah19.pdf" download target="_blank" rel="noopener noreferrer" class="download-icon" onclick="event.stopPropagation()" aria-label="Download PDF">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#4169E1" viewBox="0 0 24 24">
+                  <path d="M12 16l4-5h-3V4h-2v7H8l4 5zm-6 4h12v-2H6v2z"/>
+                </svg>
+              </a>
+            </p>
+          </div>
+        </div>
+
+        <!-- 3. kart: paper1 içeriği (Shaping Space) -->
+        <div class="col-md-6">
+          <div class="paper-card" onclick="openPaper('paper1')">
+            <small class="text-uppercase fw-bold">History of Built Environment</small>
+            <h5 class="mt-2">Shaping Space, Shaping Society</h5>
+            <p>This document is an academic response paper to the article "The Study of What We Built" by Spiro Kostof. It includes a brief summary of the article, connections to related lecture topics, and a personal reflection highlighting the student's critical analysis and interpretation.</p>
+            <a href="Shaping Space Shaping Society.pdf" download target="_blank" rel="noopener noreferrer" class="download-icon" onclick="event.stopPropagation()" aria-label="Download PDF">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#4169E1" viewBox="0 0 24 24">
+                <path d="M12 16l4-5h-3V4h-2v7H8l4 5zm-6 4h12v-2H6v2z"/>
+              </svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- 4. kart: paper3 içeriği (Where Tradition Shapes Tomorrow) -->
+        <div class="col-md-6">
+          <div class="paper-card" onclick="openPaper('paper3')">
+            <small class="text-uppercase fw-bold">Conservation of Historical Environments</small>
+            <h5 class="mt-2">Where Tradition Shapes Tomorrow</h5>
+            <p>This document is an academic response paper based on Melis Sözen’s guest lectures on architectural conservation. It provides a concise summary of the presentations, explores connections to key conservation concepts, and includes a personal reflection that emphasizes critical analysis and interpretation of the topics discussed.</p>
+            <a href="Where Tradition Shapes Tomorrow.pdf" download target="_blank" rel="noopener noreferrer" class="download-icon" onclick="event.stopPropagation()" aria-label="Download PDF">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#4169E1" viewBox="0 0 24 24">
+                <path d="M12 16l4-5h-3V4h-2v7H8l4 5zm-6 4h12v-2H6v2z"/>
+              </svg>
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <div id="paperModal" style="display:none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(240, 240, 240, 0.7); backdrop-filter: blur(4px); justify-content: center; align-items: center; z-index: 9999;">
+    <div class="paper-content" id="paperContent">
+      <button class="close-btn" onclick="closePaper()">×</button>
+      <div id="paperText" class="scrollable-text"></div>
+    </div>
+  </div>
+
+  <section class="py-5" id="practice">
+  <div class="container" style="max-width: 1100px; margin: auto; color: #17184B; font-family: 'Inter', sans-serif;">
+    <div style="display: flex; gap: 40px; flex-wrap: wrap;">
+      
+      <!-- Academic Column -->
+      <div style="flex: 1 1 48%; min-width: 450px;">
+        <h2 style="font-weight: 700; font-size: 1.8rem; margin-bottom: 1rem;">ACADEMIC</h2>
+        <h3 style="font-weight: 600; margin-bottom: 0.5rem; font-size: 1.3rem;">Formation</h3>
+        <p><strong>Bachelor of Architecture</strong> &nbsp;&nbsp; Bilkent University</p>
+        <p><strong>High School Diploma</strong> &nbsp;&nbsp; Gazi High School</p>
+      </div>
+
+      <!-- Experience Column -->
+      <div style="flex: 1 1 48%; min-width: 450px;">
+        <h2 style="font-weight: 700; font-size: 1.8rem; margin-bottom: 1rem;">EXPERIENCE</h2>
+        <h3 style="font-weight: 600; margin-bottom: 0.5rem; font-size: 1.3rem;">Professional</h3>
+
+        <p><strong>A Tasarım Architecture</strong><br />
+           Architectural Intern</p>
+        <p style="font-size: 0.9rem; line-height: 1.5; margin-top: -12px; margin-bottom: 15px;">
+          Contributed to dynamic façade design, 3D printing for architectural visualization and prototyping, and zoning plan development. Assisted in municipal permit processes and created high-quality visual presentations for client proposals.
+        </p>
+
+        <p><strong>Ünsal Group, Jewel Incek Site, Ankara</strong><br />
+           Construction Site Intern</p>
+        <p style="font-size: 0.9rem; line-height: 1.5; margin-top: -12px;">
+          Assisted in audits of compliance with construction standards and safety regulations, followed up on material and equipment demands, and supported the assembly processes of structural elements. Participated in foundation laying, excavation, and concrete pouring processes, ensuring quality control during mixing and pouring to meet required standards.
+        </p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<style>
+  .howarch-link {
+    color: #273287;
+    text-decoration: none;
+    font-weight: 700;
+    transition: color 0.3s;
+    cursor: pointer;
+  }
+  .howarch-link:hover {
+    color: #D8E63C;
+  }
+  .howarch-img-link img {
+    transition: filter 0.3s ease;
+    cursor: pointer;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  }
+  .howarch-img-link:hover img {
+    filter: brightness(0.8);
+  }
+</style>
+
+<section class="py-5" id="howarchitecture">
+  <div class="container" style="max-width: 1100px; margin: auto; color: #17184B; font-family: 'Inter', sans-serif;">
+    <div style="display: flex; gap: 30px; align-items: center; flex-wrap: wrap;">
+      <div style="flex: 1 1 60%; min-width: 300px;">
+        <h2 style="font-weight: 700; font-size: 1.8rem; margin-bottom: 1rem;">
+          <a href="https://www.instagram.com/howarchitecture/" target="_blank" rel="noopener noreferrer" class="howarch-link">
+            How Architecture
+          </a>
+        </h2>
+        <p style="font-size: 1.1rem; line-height: 1.6;">
+          As the founder and curator of How Architecture, I aim to spark dialogue around design thinking and the hidden layers of architectural practice.<br />
+          How Architecture explores the creative processes, challenges, and strategies behind great design. It uncovers how architects turn ideas into spaces, balancing science and art in the built environment.
+        </p>
+      </div>
+      <div style="flex: 1 1 250px; min-width: 150px; text-align: center;">
+        <a href="https://www.instagram.com/howarchitecture/" target="_blank" rel="noopener noreferrer" class="howarch-img-link">
+          <img src="howarch.jpg" alt="How Architecture" style="max-width: 250px;" />
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+
+
+  <section class="py-5" id="cv">
+  <div class="container text-center" style="max-width: 600px; margin: auto;">
+    <h2 style="color: #273287; font-weight: 700; margin-bottom: 20px;">Curriculum Vitae</h2>
+    <p style="font-size: 1.1rem; color: #17184B; margin-bottom: 20px;">
+      You can download my detailed CV including professional history, education, skills, and interests.
+    </p>
+    <a href="webpagecv.pdf" download target="_blank" rel="noopener noreferrer" class="download-icon" aria-label="Download CV">
+      <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="#273287">
+        <path d="M12 16l4-5h-3V4h-2v7H8l4 5zm-6 4h12v-2H6v2z"/>
+      </svg>
+      <span style="font-weight: 600; font-size: 1rem; color: #273287; margin-left: 8px; vertical-align: middle;">Download My CV</span>
+    </a>
+  </div>
+</section>
+
+  <section class="py-5 bg-white" id="contact">
+  <div class="container text-center" style="max-width: 600px; margin: auto; color: #17184B; font-family: 'Inter', sans-serif;">
+    <h2 style="color: #273287; font-weight: 700; margin-bottom: 30px;">Contact</h2>
+    <div style="display: flex; justify-content: center; gap: 40px; font-size: 1.1rem; font-weight: 600;">
+      <div>
+        <span>Email: </span>
+        <a href="mailto:melisak1801@gmail.com" class="contact-link">
+          melisak1801@gmail.com
+        </a>
+      </div>
+      <div>
+        <span>LinkedIn: </span>
+        <a href="https://www.linkedin.com/in/melisa-karaca-28576223b" target="_blank" rel="noopener noreferrer" class="contact-link">
+          melisa-karaca
+        </a>
+      </div>
+      <div>
+        <span>Instagram: </span>
+        <a href="https://www.instagram.com/howarchitecture/" target="_blank" rel="noopener noreferrer" class="contact-link">
+          @howarchitecture
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<style>
+  /* Contact kısmı linkleri navbar linkleri gibi hover renk değişimi */
+  .contact-link {
+    color: #273287;
+    text-decoration: none;
+    transition: color 0.3s;
+    font-weight: 600;
+  }
+  .contact-link:hover {
+    color: #D8E63C;
+  }
+</style>
+
+  <footer class="footer">
+    &copy; 2025 Studio by Melisa Karaca. All rights reserved.
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+  <script>
+    AOS.init();
+
+    const papers = {
+  paper1: `
+<strong style="font-size: 1.5rem; font-weight: 700;">Shaping Space, Shaping Society</strong>
+
+<p>In Kostof's article, "The Study of What We Built," he emphasizes that architecture, commonly perceived merely as a physical entity, should instead be understood as an extension of cultural rituals and societal practices. Kostof argues that architecture is inherently dynamic, shaped significantly by its surroundings: "No building is an isolated object, sufficient unto itself. It belongs in a larger setting, within a small quantity of nature, a neighborhood of other buildings, or both. It derives much of its character from this natural or manufactured environment that embraces it" (Kostof, 1995, p. 10).</p>
+
+<p>The role and significance of the agora in society provide clear evidence supporting Kostof’s perspective and resonate with our class discussions. Agoras in ancient Greece, for instance, functioned not only as essential components of urban design but also encapsulated the era’s customs, rituals, and democratic values. They served as forums for public debate and decision-making, fostering direct civic participation. An illustrative example is the Agora of Athens, near Zeus Agoraio, which continues to reflect religious rituals practiced within public spaces. Such historical examples reinforce that architecture profoundly influences lifestyles and societal structures beyond the mere act of constructing physical spaces.</p>
+
+<p>The critical notion of Kostof's article, articulated through the expression, "Neither material reality alone nor general background of culture will suffice to explain the peculiar nature of the building" (Kostof, 1995, p. 7), prompts further contemplation about architecture's role beyond functional responses to societal needs. Kostof’s argument positions architecture not merely as a reactive discipline but as an active tool shaping society. Nevertheless, his concentration primarily on historical examples somewhat restricts his discourse, inadequately addressing architecture's proactive role in shaping future societies and lifestyles. Kostof could have offered a more holistic narrative by encompassing a broader temporal spectrum—past, present, and future. Such an approach would have more thoroughly captured architecture's dynamic and evolving relationship with society.</p>
+
+<p>In conclusion, while Kostof's article compellingly asserts architecture's deep societal embedment, it slightly overlooks the discipline’s anticipatory potential and capacity to innovate societal norms. As a young architect, I find this critical perspective inspiring, pushing me to consider not only the cultural and historical contexts but also the future trajectories and transformative potential embedded within architectural practice.</p>
+
+<a href="Shaping Space Shaping Society.pdf" download target="_blank" rel="noopener noreferrer" class="download-icon" aria-label="Download PDF">
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+    <path d="M12 16l4-5h-3V4h-2v7H8l4 5zm-6 4h12v-2H6v2z"/>
+  </svg>
+</a>
+`,
+
+  paper2: `
+<strong style="font-size: 1.5rem; font-weight: 700;">Conservation of Urban Heritage: Triangle of Ministries, Ankara</strong>
+
+<p>This document is an academic study of the Triangle of Ministries in Ankara, tracing its original modernist layout (1924–1935), analyzing subsequent state-led interventions against international conservation charters, and proposing guidelines to restore the site’s integrity, authenticity, and public engagement. Please download it to review the study.</p>
+
+<a href="Conservation of Historical Environments.pdf" download target="_blank" rel="noopener noreferrer" class="download-icon" aria-label="Download PDF">
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+    <path d="M12 16l4-5h-3V4h-2v7H8l4 5zm-6 4h12v-2H6v2z"/>
+  </svg>
+</a>
+`,
+
+  paper3: `
+<strong style="font-size: 1.5rem; font-weight: 700;">Where Tradition Shapes Tomorrow</strong>
+
+<p><strong>Where Tradition Shapes Tomorrow</strong></p>
+<p><strong>Selected Lectures</strong></p>
+<p>“<strong>Navigating New Narratives: Integrating Architectural Conservation Methodologies in Contemporary Design</strong>” by Melis Sözen<br />
+“<strong>Conservation of Modern Residential Heritage: Developing Principles and Guidelines for Merbank Houses in Keçiören, Ankara</strong>” by Melis Sözen</p>
+<p><strong>Summary of the Lectures</strong></p>
+<p>Melis Sözen’s two lectures offered a comprehensive exploration of architectural conservation, focusing on both the preservation of historic urban environments and the challenges involved in conserving modern residential heritage. Together, they provided valuable insights into the principles, methods, and approaches necessary for successful conservation efforts, particularly within the Turkish context.</p>
+<p><strong>Navigating New Narratives: Integrating Conservation with Contemporary Design</strong></p>
+<p>The first lecture addressed the core stages of the conservation process while emphasizing the integration of conservation methodologies with contemporary architectural design. Sözen outlined four fundamental phases:</p>
+<p><strong>1. Understanding the Space:</strong> This initial phase involves uncovering the historical context to grasp the value and meaning embedded within the space. Understanding the layers of history is crucial for informed decision-making.<br />
+<strong>2. Analysis:</strong> Detailed evaluation of both the physical characteristics and the contextual relationships of the site or structure. This phase helps identify key elements worth preserving or adapting.<br />
+<strong>3. Principles and Possible Recommendations:</strong> Sözen stressed the importance of balancing conservation with innovation. She discussed emerging principles that encourage respectful adaptation and creative integration rather than rigid preservation.</p>
+<p><strong>4. Monitoring:</strong> Conservation is a continuous process. Methods must be applied dynamically, with ongoing assessment to ensure both protection and functionality over time.</p>
+<p>Several case studies were presented, including the Yapı Kredi Culture and Arts Center, the Post Office Multi-Purpose Urban Center, and the Hasanpaşa Gasworks in Istanbul. These projects demonstrated how heritage protection can be effectively combined with contemporary needs, serving as exemplary models of adaptive reuse and sustainable conservation.</p>
+<p><strong>Conservation of Merbank Houses: Challenges in Modern Residential Heritage</strong></p>
+<p>The second lecture focused on the Merbank Houses in Keçiören, Ankara—an important example of Ankara’s modernization in the 1950s. Designed by Sedat Çağlar in 1957, this housing complex featured various typologies and integrated public facilities. However, over time, much of its public areas were demolished and housing units underwent significant alterations.</p>
+<p>Sözen critically examined the protection policies (or lack thereof) governing modern residential heritage in Turkey, highlighting several key issues:</p>
+<p>• <strong>The absence of comprehensive and binding policies dedicated to the protection of modern housing heritage.</strong><br />
+• <strong>The pressing need for residential buildings to be adaptable to rapidly changing user needs and lifestyles.</strong><br />
+• <strong>The risk of modern housing losing their unique architectural identities due to neglect or insensitive interventions.</strong></p>
+<p>The Merbank Houses serve as a microcosm of broader challenges faced not only in Turkey but globally, where modern housing heritage often remains undervalued and inadequately protected. The deterioration of public spaces and fragmented management have significantly undermined the original character of the complex.</p>
+<p><strong>Personal Reflection and Critical Analysis</strong></p>
+<p>Both lectures illuminated the multifaceted and complex nature of architectural conservation. I was particularly struck by the nuanced relationship between preserving historical authenticity and addressing contemporary social needs. The first lecture’s emphasis on integrating conservation with innovative design expanded my understanding of how adaptive reuse can revitalize heritage sites without compromising their significance.</p>
+<p>The Merbank Houses case study revealed the unique challenges posed by modern residential heritage. Unlike monumental public buildings, residential complexes often struggle for recognition and protection. This raises critical questions about how heritage value is defined and who decides what deserves preservation. The lack of comprehensive policies and active management plans leads to gradual erosion of cultural and social values embedded in these housing projects.</p>
+<p>This situation underscores the importance of developing inclusive conservation strategies that incorporate stakeholder participation, including local communities, residents, experts, and policymakers. Such cooperation is vital for crafting dynamic, realistic, and sustainable protection frameworks that address both physical structures and their social, cultural, and historical contexts.</p>
+<p>Additionally, the discussion helped me appreciate the importance of ongoing monitoring and flexibility in conservation processes. Heritage preservation cannot be static but must evolve alongside changing societal needs and urban dynamics.</p>
+<p><strong>Conclusion</strong></p>
+<p>Melis Sözen’s presentations provided me with a profound and holistic understanding of architectural conservation, especially within the Turkish context. They highlighted the intricate challenges of balancing preservation with innovation and adapting to evolving user needs, particularly in the realm of modern residential heritage.</p>
+<p>Moving forward, these insights will significantly inform my approach to future design and conservation projects. Developing comprehensive, context-sensitive strategies that engage diverse stakeholders and embrace adaptability will be essential. I am inspired to pursue conservation practices that not only protect physical heritage but also honor and sustain the social and cultural narratives that give places their meaning.</p>
+
+<a href="Where Tradition Shapes Tomorrow.pdf" download target="_blank" rel="noopener noreferrer" class="download-icon" aria-label="Download PDF">
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+    <path d="M12 16l4-5h-3V4h-2v7H8l4 5zm-6 4h12v-2H6v2z"/>
+  </svg>
+</a>
+`,
+
+  paper4: `
+<strong style="font-size: 1.5rem; font-weight: 700;">Cinnah 19: Redefining Urban Space and Function</strong>
+
+<p>Cinnah 19, located on Cinnah Street in Ankara, is one of the most successful examples of modern architecture of its time and remains one of Turkey's unique structures. The story of the apartment building on the parcel owned by the 'Squares Directorate Workers Building Cooperative Directorate' at 17 Posta Caddesi begins with the application made to the Ankara Municipality Zoning Directorate through a petition signed by Nizami Atacan on May 4, 1955. While the original plan dated 1955 was signed by Architect Necdet Dağ, the renovation project dated 1958 bears the signature of Nejat Ersin, whose name is now mostly associated with this apartment in Ankara. Although initially built for use by DHMI, it was later opened to civilian use.</p>
+<p><strong>Concept and Idea</strong></p>
+<p>The design is thought to be inspired by Le Corbusier's <em>Unité d'Habitation</em>, one of the most important examples of modern life and residential architecture, and also bears traces of influential modernist architects such as Oscar Niemeyer, Lucio Costa, and Durrel Stone.</p>
+<p>The name of Cinnah 19 has changed over time. The first known name of Cinnah Street was Posta, named after the Post Office building that still stands today. After 1960, its name was changed to Dr. Reşit by the mayor Vedat Dalokay in 1975, and later renamed Cinnah Street after Muhammad Ali Jinnah, the founder and first president of Pakistan. In summary, it began as Posta 17, became Dr. Reşit 19, and finally Cinnah 19.</p>
+<p>The building is currently an architectural landmark in Ankara, especially after renovations of two duplexes by the Architects Association in 1927. It attracts architects, particularly young professionals, and calls attention to the renewal and re-evaluation of this structure, which preserves its original identity. Cinnah 19 is a strong example reflecting the modern architecture of Ankara.</p>
+<p>Cinnah 19, a design that can still be described as 'experimental' today, aims to preserve the topography as it is, designs duplex apartments for each user, considers the daily life of its community, and creates spaces for gathering and socialization.</p>
+<p><strong>Spatial Analysis</strong></p>
+<p>One of the crucial aspects of Cinnah 19 is its connection to the cooperative housing projects that started in Turkey in the 1930s. With the increase in cooperatives after 1948, very successful results were obtained in mass housing. The law regulating cooperative housing facilitated payment processes and acquisition of housing through collective efforts. This law also created standards for mass housing units enforced through cooperatives, of which Cinnah 19 is an exemplary case. The building shows advanced design in terms of geometry, mass, location, and structure, demonstrating how everyday use and standardization can be achieved in an advanced architectural manner.</p>
+<p>Cooperative apartments still maintain their original designs and exteriors today. However, many architects or owners of similar buildings neglect the living environment standards or common goals. Cinnah 19 stands out as a unique residence designed with contemporary and European methods, offering a modern flat compared to other cooperative structures of its time.</p>
+<p><strong>Building Description</strong></p>
+<p>The building has a rectangular plan, containing 15 duplexes and two regular apartments across five stories. It includes shared garden areas, rest spaces, terraces, and storage. Cinnah 19 is notable for utopian common areas such as a sun terrace and a rooftop swimming pool. The building is raised on columns, oriented to the north and the landscape, aiming not to disturb the site’s settlement. The north and south facades are functionally divided: the north facade reveals the cellular geometry of apartments, while all corridors providing circulation are located on the south facade. A unique solar control system closes the corridor on the south facade, featuring a semi-open wall with geometric patterns giving character to the building. The flooring is enriched with black and white mosaic tiles.</p>
+<p>Modernist architecture's connection to industrialized construction materials is evident here, symbolizing freedom in architectural expression. From the rear, the duplex arrangement is hidden, perceptible only to those familiar with the design: the lower floor serves as the corridor entrance, and the upper floor acts as the balcony. From the front, small balconies accessed via bridges adjacent to staircases connect living rooms to upper floors.</p>
+<p>Duplex apartments feature kitchens adjacent to entrance halls facing corridors and, in some units, a small square room connected to the living room. Upstairs, rooms face each other across an inner balcony.</p>
+<p><strong>Interaction with the Environment</strong></p>
+<p>Upon construction, Cinnah 19 dominated the city view from its street. Common areas were designed on the northern side to maximize these views. Expansive balconies connect living units to the outside world, while two-story balconies and the building’s elevation on columns enhance its verticality without disturbing the natural topography. The terrace pool, added in 1958 and used until 1967, included amenities such as a bar, fireplace, showers, cabins, and toilets, serving as a utopian common area. Unfortunately, the terrace has lost its social function today.</p>
+<p>Nejat Ersin cited influences from Le Corbusier, Oscar Niemeyer, Lucio Costa, and Edward Durrell Stone in the design. Le Corbusier’s <em>Unité d'Habitation</em> in Marseille, known for its modular units, pilotis, large windows, and communal terraces, inspired Cinnah 19’s approach. Ersin’s design replicated these ideals within the cooperative framework, ensuring uniform volumes and duplex units for a cozy, natural home ambiance.</p>
+<p>Stone’s influence is visible in the use of white concrete grills on facades, contributing to light and shadow interplay. These grills create rhythmic repetition and continuity throughout the building and hallways. Balconies are asymmetrically placed to balance the rhythm, enhancing architectural harmony.</p>
+<p>The building’s adaptation to its curved topography avoided earth alteration, employing pilotis to preserve the site—an approach similar to globally renowned examples such as Fallingwater House and Villa Malaparte.</p>
+<p><strong>Evaluation of Architectural Form and Function</strong></p>
+<p>The form of Cinnah 19 is carefully designed to optimize spatial functionality. It balances privacy and communal living, maximizing natural light and ventilation via window and balcony placement. The building fosters a healthy, pleasant living environment with a strong connection to its surroundings.</p>
+<p><strong>Experiencing Cinnah 19</strong></p>
+<p>Approaching Cinnah 19, one is immediately drawn to its dynamic and confident architectural form. The facade’s sleek lines and geometric patterns create a captivating rhythm. Inside, refined materials and high-quality finishes—from polished wood to gleaming stone—contribute to an atmosphere of elegance.</p>
+<p>The open-plan interiors allow abundant natural light, framing city views and forging a connection between indoors and outdoors. Green spaces like rooftop gardens and courtyards introduce nature into the urban setting, promoting sustainability and tranquility.</p>
+<p>Flexible living spaces with multipurpose rooms and smart storage accommodate diverse resident needs, reflecting modern lifestyles. Communal areas encourage social interaction and community bonding.</p>
+<p><strong>Conclusion</strong></p>
+<p>Cinnah 19 stands as a testament to innovative modern architecture in Ankara, harmonizing form, function, environment, and social life. Its design philosophy, inspired by pioneering modernists, remains relevant and inspiring, inviting appreciation for architectural ingenuity and the human experience within urban living.</p>
+<p><strong>References</strong></p>
+<p>- Cengizkan, A. (2002). ‘Cinnah 19: Utopian or Real?’ <em>Mimarlık Dergisi</em>.<br>
+- Ersin, N. (2002). Retrospective. <em>Mimarlık Dergisi</em>.<br>
+- İmamoğlu, B. (2002). Republican Era Architecture: Reflections on Ankara's Architecture, 1950–1980. <em>Mimarlık Dergisi</em>.<br>
+- Bilsel, C., & Cengizkan, A. (2002). On Profession and Organization with Nejat Ersin. <em>Mimarlık Dergisi</em>.<br>
+- Cengizkan, A. (2000). Discursive Formations in Turkish Residential Architecture, Ankara, 1948–1962 [PhD Thesis]. METU Architecture.<br>
+- Cengizkan, A., Balamir, A., Altan, E., & Boyacıoğlu, E. (Eds.). Bina Kimlikleri Interviews – 7 Squares Directorate Cooperative Apartment – Cinnah 19. TMMOB Chamber of Architects.</p>
+
+<a href="Cinnah19.pdf" download target="_blank" rel="noopener noreferrer" class="download-icon" aria-label="Download PDF">
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+    <path d="M12 16l4-5h-3V4h-2v7H8l4 5zm-6 4h12v-2H6v2z"/>
+  </svg>
+</a>
+`
+};
+
+    function openPaper(id) {
+      document.getElementById('paperText').innerHTML = papers[id];
+      document.getElementById('paperModal').style.display = 'flex';
+    }
+
+    function closePaper() {
+      document.getElementById('paperModal').style.display = 'none';
+      document.getElementById('paperText').innerHTML = '';
+    }
+
+    // Navbar arka plan şeffaflık kontrolü
+    const header = document.getElementById('mainHeader');
+    window.addEventListener('scroll', () => {
+      if(window.scrollY > 50) {
+        header.classList.add('transparent');
+      } else {
+        header.classList.remove('transparent');
+      }
+    });
+
+    // Modal dışına tıklayınca kapatma
+    const paperModal = document.getElementById('paperModal');
+    paperModal.addEventListener('click', (event) => {
+      if(event.target === paperModal) {
+        closePaper();
+      }
+    });
+
+    // Projects hover arka plan
+    const projectsHoverList = document.querySelector('.projects-hover-list');
+    const projectItems = document.querySelectorAll('.project-item');
+    projectItems.forEach((item, index) => {
+      item.addEventListener('mouseenter', () => {
+        if(index === 0) { // Sadece ilk proje için arka plan değişecek
+          projectsHoverList.style.setProperty('--hover-bg', 'url(tidalthreshold4.jpg)');
+          projectsHoverList.classList.add('hover-active');
+        }
+      });
+      item.addEventListener('mouseleave', () => {
+        projectsHoverList.classList.remove('hover-active');
+      });
+    });
+  </script>
+</body>
+</html>
