@@ -413,10 +413,19 @@ a.published-link {
   margin-bottom: 15px;
   text-align: justify; /* unutma, bu senin önceki isteğin */
 }
+  .hero-img {
+    width: 100%;
+    height: 100vh;
+    object-fit: cover;
+    display: block;
+  }
 
-
-
-
+  @media (max-width: 768px) {
+    .hero-img {
+      height: auto;
+      object-fit: contain;
+    }
+  }
 
   </style>
 </head>
@@ -441,7 +450,7 @@ a.published-link {
 
 
   <section class="hero" id="hero" style="margin-top: 70px;">
-    <img src="MelisaKaracaimg.png" alt="Melisa Karaca" style="width: 100%; height: 100vh; object-fit: cover; display: block;" />
+    <img src="MelisaKaracaimg.png" alt="Melisa Karaca" class="hero-img" />
   </section>
 
   <section class="py-5" id="about">
