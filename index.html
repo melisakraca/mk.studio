@@ -321,6 +321,103 @@ nav a.how-arch-link:hover {
 #menuToggle {
   display: none;
 }
+
+/* Senin önceki tüm stiller burada... */
+
+a.published-link {
+  color: #273287;
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.3s ease;
+}
+
+a.published-link:hover {
+  color: #D8E63C;
+}
+
+a.published-link {
+  color: #273287;
+  text-decoration: none;
+  font-weight: 500; /* İncelttik */
+  transition: color 0.3s ease;
+}
+
+/* Verification link navbar stili */
+.certificates-verification-link {
+  color: #273287;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s ease;
+  cursor: pointer;
+}
+
+.certificates-verification-link:hover {
+  color: #D8E63C;
+}
+
+/* Certificates maddelerinin fontu Experience açıklamasıyla uyumlu */
+.certificates-item {
+  font-size: 0.9rem;
+  line-height: 1.5;
+  margin-top: -12px;
+  margin-bottom: 15px;
+}
+
+.published-projects-text {
+  font-size: 0.9rem;
+  line-height: 1.5;
+  margin-top: -12px;
+  margin-bottom: 15px;
+}
+
+.certificates-item,
+.published-projects-text,
+.profile-block p {
+  text-align: justify;
+}
+
+.experience-column h2 {
+  font-weight: 700;
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+}
+
+.experience-column h3 {
+  font-weight: 600;
+  font-size: 1.3rem;
+  margin-bottom: 0.5rem;
+}
+
+.experience-role {
+  font-weight: 600;
+  margin-top: 1rem;
+}
+
+.experience-description {
+  font-size: 0.9rem;
+  line-height: 1.5;
+  margin-top: -12px;
+  margin-bottom: 15px;
+  text-align: justify; /* İstersen justify de ekleyebilirsin */
+}
+
+.certificates-item {
+  font-size: 0.9rem;
+  line-height: 1.5;
+  margin: 10px 0 15px 0;
+}
+.published-projects-text {
+  font-size: 0.9rem;
+  line-height: 1.5;
+  margin-top: 12px; /* veya 10px, tercihe göre */
+  margin-bottom: 15px;
+  text-align: justify; /* unutma, bu senin önceki isteğin */
+}
+
+
+
+
+
   </style>
 </head>
 <body>
@@ -471,29 +568,58 @@ nav a.how-arch-link:hover {
         <h3 style="font-weight: 600; margin-bottom: 0.5rem; font-size: 1.3rem;">Formation</h3>
         <p><strong>Bachelor of Architecture</strong> &nbsp;&nbsp; Bilkent University</p>
         <p><strong>High School Diploma</strong> &nbsp;&nbsp; Gazi High School</p>
+
+        <!-- Certificates and Published Projects -->
+        <h2 style="font-weight: 700; font-size: 1.8rem; margin: 2rem 0 1rem;">CERTIFICATES AND PUBLISHED PROJECTS</h2>
+
+        <h3 class="published-projects-title" style="font-weight: 600; margin-top: 1.5rem; margin-bottom: 0.5rem; font-size: 1.3rem;">Published Projects</h3>
+<p class="certificates-item">
+  <strong>Making Architecture</strong> — IE Business School, IE School of Architecture & Design, 2025<br />
+  <a href="https://coursera.org/share/1ac99b483992271d5b3392d69fb2033a" target="_blank" class="certificates-verification-link">Verification Link</a>
+</p>
+<p class="certificates-item">
+  <strong>Renewable Energy and Green Building Entrepreneurship</strong> — Duke University, 2025<br />
+  <a href="https://coursera.org/share/4e9f54c8839a3a6d967b3105546d2a6b" target="_blank" class="certificates-verification-link">Verification Link</a>
+</p>
+<p class="certificates-item">
+  <strong>Sustainable Urban Regeneration</strong> — Università Bocconi, 2025<br />
+  <a href="https://coursera.org/share/3e1bd5dc5227dd39f699df41e8996ce1" target="_blank" class="certificates-verification-link">Verification Link</a>
+</p>
+
+
+
+        <h3 style="font-weight: 600; margin-top: 1.5rem; margin-bottom: 0.5rem; font-size: 1.3rem;">Published Projects</h3>
+<p class="published-projects-text">
+  <strong>The Theater Library</strong> – <em>Studio Works</em>, Bilkent University Department of Architecture, 2023<br />
+  <a href="https://arch.bilkent.edu.tr/?p=3940" target="_blank" class="published-link">arch.bilkent.edu.tr/?p=3940</a>
+</p>
+
       </div>
 
       <!-- Experience Column -->
-      <div style="flex: 1 1 48%; min-width: 450px;">
-        <h2 style="font-weight: 700; font-size: 1.8rem; margin-bottom: 1rem;">EXPERIENCE</h2>
-        <h3 style="font-weight: 600; margin-bottom: 0.5rem; font-size: 1.3rem;">Professional</h3>
+      <div style="flex: 1 1 48%; min-width: 450px;" class="experience-column">
+  <h2>EXPERIENCE</h2>
+  <h3>Professional</h3>
 
-        <p><strong>A Tasarım Architecture</strong><br />
-           Architectural Intern</p>
-        <p style="font-size: 0.9rem; line-height: 1.5; margin-top: -12px; margin-bottom: 15px;">
-          Contributed to dynamic façade design, 3D printing for architectural visualization and prototyping, and zoning plan development. Assisted in municipal permit processes and created high-quality visual presentations for client proposals.
-        </p>
+  <p class="experience-role"><strong>A Tasarım Architecture</strong><br />Architectural Intern</p>
+  <p class="experience-description">
+    Contributed to dynamic façade design, 3D printing for architectural visualization and prototyping, and zoning plan development. Assisted in municipal permit processes and created high-quality visual presentations for client proposals.
+  </p>
 
-        <p><strong>Ünsal Group, Jewel Incek Site, Ankara</strong><br />
-           Construction Site Intern</p>
-        <p style="font-size: 0.9rem; line-height: 1.5; margin-top: -12px;">
-          Assisted in audits of compliance with construction standards and safety regulations, followed up on material and equipment demands, and supported the assembly processes of structural elements. Participated in foundation laying, excavation, and concrete pouring processes, ensuring quality control during mixing and pouring to meet required standards.
-        </p>
-      </div>
+  <p class="experience-role"><strong>Ünsal Group, Jewel Incek Site, Ankara</strong><br />Construction Site Intern</p>
+  <p class="experience-description">
+    Assisted in audits of compliance with construction standards and safety regulations, followed up on material and equipment demands, and supported the assembly processes of structural elements. Participated in foundation laying, excavation, and concrete pouring processes, ensuring quality control during mixing and pouring to meet required standards.
+  </p>
+</div>
+
 
     </div>
   </div>
 </section>
+
+
+
+
 
 <style>
   .howarch-link {
